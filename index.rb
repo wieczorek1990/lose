@@ -7,7 +7,7 @@ require_relative 'note'
 
 # Based on http://www.codeproject.com/Tips/668655/Rest-service-with-Ruby-plus-Sinatra-plus-Datamappe
 
-DataMapper.setup(:default, "sqlite://#{Dir.pwd}/index.db")
+DataMapper.setup(:default, "sqlite://#{Dir.pwd}/datamapper.db")
 DataMapper.finalize
 DataMapper.auto_migrate!
 
@@ -25,12 +25,6 @@ get '/api/' do
   json(Note.all)
 end
 
-get '/api/:id' do
-  note = Note.get(params[:id])
-  halt(404) if note.nil?
-  json(note)
-end
-
 post '/api/' do
   body = JSON.parse(request.body.read)
   note = Note.create(
@@ -38,16 +32,6 @@ post '/api/' do
   )
   status(201)
   json(note)
-end
-
-put '/api/:id' do
-  body = JSON.parse request.body.read
-  note = Note.get(params[:id])
-  halt(404) if note.nil?
-  halt(500) unless note.update(
-    text: body['text']
-  )
-  status(200)
 end
 
 delete '/api/:id' do

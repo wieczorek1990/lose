@@ -1,3 +1,5 @@
-index.db
+*.db
+*.db-journal
+*.pyc
 node_modules/
 

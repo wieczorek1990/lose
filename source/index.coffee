@@ -18,6 +18,7 @@ $.get API, (notes) ->
     $.ajax {
       url: API,
       method: 'POST'
+      contentType: 'application/json'
       data: JSON.stringify({
         text: $('#new-input').val()
       }),
